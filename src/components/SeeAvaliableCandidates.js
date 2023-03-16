@@ -50,8 +50,11 @@ export default function SeeAvaliableCandidates({userKey, userProfile}) {
                             <CardContent>
                                 <Typography variant="h4">{seeker['first_name'] + " " + seeker['last_name']}</Typography>
                                 <Typography variant="h5">Current Company: {seeker['company']}</Typography>
-                                <Typography variant="h6">Top Skills: {seeker['skills'].map((skill)=>{
-                                    return skill['name'] + ", "
+                                <Typography variant="h6">Top Skills: {seeker['skills'].map(function createSkills(skill){
+                                    if(skill['name']){
+                                        return skill['name'] + ", "
+                                    }
+                                    return ""
                                 })}</Typography>
                             </CardContent>
                         </Card>
