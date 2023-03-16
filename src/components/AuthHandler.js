@@ -76,20 +76,19 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
         const code = (window.location.search.match(/code=([^&]+)/) || [])[1];
         localStorage.setItem("code", code)
         convertCodeToToken(code).then((resToken)=>{
-            if(resToken && resToken.length > 10){
-                updateProfileData(resToken).then((key)=>{
-                    retrieveProfile(key).then((profile)=>{
-                        setUserProfile(profile)
-                        setLoading(false)
-                        if(profile["user_type"]=="seeker"){
-                            navigate("/user-profile")
-                        }
-                        else{
-                            navigate("/all-seekers")
-                        }
-                    })
+            console.log(resToken)
+            updateProfileData(resToken).then((key)=>{
+                retrieveProfile(key).then((profile)=>{
+                    setUserProfile(profile)
+                    setLoading(false)
+                    if(profile["user_type"]=="seeker"){
+                        navigate("/user-profile")
+                    }
+                    else{
+                        navigate("/all-seekers")
+                    }
                 })
-            }
+            })
         })
     }, []);
 
