@@ -10,7 +10,7 @@ export default function LoginPage({userType, setToken, token}) {
     async function handleLinkedInLogin(){
         setLoading(true)
         try{
-            const response = await fetch("http://arjunsaili.pythonanywhere.com/auth/handle-linkedin-login/")
+            const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/handle-linkedin-login/")
             const url = await response.text()
             window.location.assign(url.substring(2, url.length - 2));
         }catch(error){
