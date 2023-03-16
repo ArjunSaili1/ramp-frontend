@@ -46,7 +46,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
     }
 
     async function convertCodeToToken(code){
-        if (token == null){
+        if (token === null){
             const formdata = new FormData();
             formdata.append("code", code)
             const requestOptions = {
@@ -57,8 +57,8 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
             try{
                 const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/access-token/", requestOptions)
                 const resJson = await response.json()
-                if (response.status == 200){
-                    if(token == null){
+                if (response.status === 200){
+                    if(token === null){
                         setToken(resJson['access_token'])
                         return resJson['access_token']
                     }
@@ -80,7 +80,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
                 retrieveProfile(key).then((profile)=>{
                     setUserProfile(profile)
                     setLoading(false)
-                    if(profile["user_type"]=="seeker"){
+                    if(profile["user_type"]==="seeker"){
                         navigate("/user-profile")
                     }
                     else{
