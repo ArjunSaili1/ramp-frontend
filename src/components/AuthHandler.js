@@ -20,7 +20,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
         };
         try{
             let userType = localStorage.getItem("user_type")
-            const response = await fetch(`http://arjunsaili.pythonanywhere.com/auth/${userType}/`, requestOptions)
+            const response = await fetch(`https://arjunsaili.pythonanywhere.com/auth/${userType}/`, requestOptions)
             const resJson = await response.json()
             return resJson['key']
         }
@@ -40,7 +40,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
         redirect: 'follow'
         };
 
-        const response = await fetch("http://arjunsaili.pythonanywhere.com/auth/dj-rest-auth/user/", requestOptions)
+        const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/dj-rest-auth/user/", requestOptions)
         const responseJson = await response.json()
         return responseJson
     }
@@ -55,7 +55,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
                 redirect: 'follow'
             };
             try{
-                const response = await fetch("http://arjunsaili.pythonanywhere.com/auth/access-token/", requestOptions)
+                const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/access-token/", requestOptions)
                 const resJson = await response.json()
                 if (response.status == 200){
                     if(token == null){

@@ -18,7 +18,7 @@ export default function SeeAvaliableCandidates({userKey, userProfile}) {
             redirect: 'follow'
             };
             try{
-                const response = await fetch("http://arjunsaili.pythonanywhere.com/auth/all-seekers/", requestOptions)
+                const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/all-seekers/", requestOptions)
                 const resJson = await response.json()
                 return resJson
             }
