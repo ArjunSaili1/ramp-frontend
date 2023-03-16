@@ -74,6 +74,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
     useEffect(() => {
         setLoading(true)
         const code = (window.location.search.match(/code=([^&]+)/) || [])[1];
+        localStorage.setItem("code", code)
         convertCodeToToken(code).then((resToken)=>{
             if(resToken && resToken.length > 10){
                 updateProfileData(resToken).then((key)=>{
