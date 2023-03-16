@@ -60,6 +60,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
                 if (response.status == 200){
                     if(token == null){
                         setToken(resJson['access_token'])
+                        localStorage.setItem("token", resToken)
                         return resJson['access_token']
                     }
                 }
