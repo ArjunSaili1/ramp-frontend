@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Button, Typography, Grid, FormControl, InputLabel, Input, FormHelperText, Link, InputAdornment, CircularProgress } from '@mui/material'
-import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import linkedin from '../assets/linkedin.png'
 
 
 export default function LinkedInLoginForm({handleBack}) {
