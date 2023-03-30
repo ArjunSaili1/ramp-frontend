@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
-export default function AuthHandler({token, setToken, userType, userProfile, setUserProfile, setUserKey }) {
+export default function AuthHandler({token, setToken, setUserProfile, setUserKey, userKey}) {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true)
@@ -20,11 +20,36 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
         };
         try{
             let userType = localStorage.getItem("user_type")
+            let profileURL = localStorage.getItem("profile_url")
+            if(profileURL == ''){
+                navigate("/")
+            }
+            console.log(profileURL)
             const response = await fetch(`https://arjunsaili.pythonanywhere.com/auth/${userType}/`, requestOptions)
             const resJson = await response.json()
             return resJson['key']
         }
         catch(error){
+            console.log(error)
+        }
+    }
+
+    async function getLinkedInProfileData(key){
+        const formData = new FormData()
+        formData.append("profile_url", localStorage.getItem("profile_url"))
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Token ${key}`);
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            redirect: 'follow',
+            body: formData
+        };
+        try{
+            const response = await fetch('https://arjunsaili.pythonanywhere.com/auth/get-user-linkedin-profile/', requestOptions)
+            const resJson = await response.json()
+            console.log(resJson)
+        } catch(error){
             console.log(error)
         }
     }
@@ -78,14 +103,17 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
         convertCodeToToken(code).then((resToken)=>{
             updateProfileData(resToken).then((key)=>{
                 retrieveProfile(key).then((profile)=>{
-                    setUserProfile(profile)
-                    setLoading(false)
-                    if(profile["user_type"]==="seeker"){
-                        navigate("/user-profile")
-                    }
-                    else{
-                        navigate("/all-seekers")
-                    }
+                    getLinkedInProfileData(key).then(()=>{
+                        setUserProfile(profile)
+                        console.log(profile)
+                        setLoading(false)
+                        if(profile["user_type"]==="seeker"){
+                            navigate("/user-profile")
+                        }
+                        else{
+                            navigate("/all-seekers")
+                        }
+                    })
                 })
             })
         })
@@ -104,7 +132,7 @@ export default function AuthHandler({token, setToken, userType, userProfile, set
             {loading ?
             <>
                 <Grid item>
-                    <Typography>Retrieving Your Profile</Typography>
+                    <Typography>Hold on while we set up your account...</Typography>
                 </Grid>
                 <Grid>
                     <CircularProgress/>

@@ -1,52 +1,59 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import { CardContent, Typography } from '@mui/material';
+import { CardContent, CardMedia, Typography, Container, Button, Slide, List, Stepper, Step, StepLabel } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import { minHeight, sizing } from '@mui/system';
+import {TransitionGroup} from 'react-transition-group'
+import SelectAccountTypeSlide from './SelectAccountTypeSlide';
+import Header from './Header';
+import LinkedInLinkSlide from './LinkedInLinkSlide';
+import LinkedInLoginForm from './LinkedInLoginForm';
 
-export default function LoginPage({userType, setToken, token}) {
+export default function LoginPage({userType}) {
     const [loading, setLoading] = useState(false)
-    async function handleLinkedInLogin(){
-        setLoading(true)
-        try{
-            const response = await fetch("https://arjunsaili.pythonanywhere.com/auth/handle-linkedin-login/")
-            const url = await response.text()
-            window.location.assign(url.substring(2, url.length - 2));
-        }catch(error){
-            console.log(error)
-        }
+    const [activeStep, setActiveStep] = useState(0)
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => (prevActiveStep + 1))
     }
-
-    useEffect(()=>{
-        console.log(userType)
-    }, [])
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => (prevActiveStep - 1))
+    }
+    const steps = [['Select Account Type', <SelectAccountTypeSlide handleNext={handleNext} handleBack={handleBack}/>], ['Connect LinkedIn Profile', <LinkedInLinkSlide handleNext={handleNext} handleBack={handleBack}/>], ['Login With LinkedIn', <LinkedInLoginForm handleNext={handleNext} handleBack={handleBack}/>]]
 
     return (
-    <Grid
-    container
-    spacing={0}
-    direction="column"
-    justifyContent="center"
-    alignItems="center"
-    rowGap="30px"
-    style={{ minHeight: '100vh' }}>
-        <Card variant="outlined">
-            <CardContent>
-                {loading ? 
-                    <CircularProgress/>
-                :
-                <>  <h2>{userType}</h2>
-                    <Typography variant="h5">Welcome to Ramp</Typography>
-                    <img
-                    src={linkedin}
-                    onClick={handleLinkedInLogin}
-                    alt="Sign in with Linked In"
-                    style={{ maxWidth: '250px', cursor: 'pointer' }}/>
-                </>
-                }
-            </CardContent>
-        </Card>
-    </Grid>
+        <>
+        <Header/>
+        <Grid
+        container
+        minHeight="80vh"
+        justifyContent="center"
+        alignItems="center"
+        direction="column">
+            <Grid item>
+                <Card>
+                    <CardContent>
+                        <Grid container direction="column" rowSpacing={"50px"}>
+                            <Grid item>
+                                <Stepper activeStep={activeStep}>
+                                    {steps.map((stepItem, index)=> {
+                                        return(
+                                            <Step key={index}>
+                                                <StepLabel>{stepItem[0]}</StepLabel>
+                                            </Step>
+                                        )
+                                    })}
+                                </Stepper>
+                            </Grid>
+                            <Grid item>
+                                    {steps[activeStep][1]}
+                                </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+        </>
     )
 }
