@@ -1,11 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState} from 'react'
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import { CardContent, CardMedia, Typography, Container, Button, Slide, List, Stepper, Step, StepLabel } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
-import { minHeight, sizing } from '@mui/system';
-import {TransitionGroup} from 'react-transition-group'
+import { CardContent, Stepper, Step, StepLabel } from '@mui/material';
 import SelectAccountTypeSlide from './SelectAccountTypeSlide';
 import Header from './Header';
 import LinkedInLinkSlide from './LinkedInLinkSlide';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@mui/material/Grid';
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 import Header from './Header';

@@ -1,13 +1,11 @@
 import { Typography, Grid, Button, Card, SvgIcon, Paper, CardContent, Tabs, Tab, useTheme } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from './Header'
 import { useNavigate } from 'react-router';
 import { ReactComponent as LockerIcon } from '../assets/locker-dynamic-color.svg';
 import { ReactComponent as WalletIcon } from '../assets/wallet-front-color.svg';
 import { ReactComponent as TargetIcon } from '../assets/target-front-color.svg'
 import { ReactComponent as ClockIcon } from '../assets/explorer-front-color.svg'
-import { Container } from '@mui/system';
-import { ThemeContext } from '@mui/styled-engine';
 
 export default function LandingPage({}) {
     const navigate = useNavigate()
